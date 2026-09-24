@@ -14,8 +14,6 @@
 [hidden]:not([hidden="until-found"]){display:none!important}</style>
 </head>
 <body>
-<link rel="preload" href="Archivo-Italic-Variable.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="Montserrat-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <style>
   @font-face { font-family: "Archivo"; src: url("Archivo-Italic-Variable.woff2") format("woff2"); font-weight: 100 900; font-style: italic; font-display: swap; }
   @font-face { font-family: "Archivo"; src: url("Archivo-Variable.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
@@ -554,7 +552,7 @@
 
   var tactile = window.matchMedia("(pointer: coarse)").matches;
   /* sur telephone on ne mesure pas avant d'alleger : on demarre deja leger */
-  var leger = tactile, FLOU = tactile ? 0.45 : 1, L = 0, H = 0, dpr = 1;
+  var leger = tactile, FLOU = tactile ? 0.30 : 1, L = 0, H = 0, dpr = 1;
   var visX = 0, visY = 0, cibX = 0, cibY = 0;           // le regard : où est le pointeur, en douceur
   var consoleEl = document.getElementById("console"), consoleTxt = "";
 
@@ -763,10 +761,6 @@
 
     var large = L > 900;
     CAM.cx = large ? L * 0.64 : L * 0.5;
-    CAM.cy = large ? H * 0.5 : H * 0.27;
-    /* sur etroit, la piece etait cadree 2,4x plus grande qu'en large (en part d'ecran) :
-       elle debordait en haut et passait sous le texte. On la ramene dans le tiers haut. */
-    CAM.ech = large ? Math.min(L * 0.5, H) * 0.35 : Math.min(L * 0.30, H * 0.19);
 
     var q = seg(p, GARDE, 1);
     var naissance = Math.max(intro, doucement(q, 0.00, 0.06));
@@ -784,13 +778,31 @@
     var allume = lumiere * (((lumiere > 0.07 && lumiere < 0.115) || (lumiere > 0.17 && lumiere < 0.205)) ? 0.22 : 1);
     var cotesA = doucement(naissance, 0.55, 1) * (1 - doucement(tranches, 0.55, 1));
 
+    /* ——— Cadrage ———
+       En large, la piece est a droite et le texte a gauche : rien ne se gene.
+       En etroit, le texte occupe le bas de l'ecran en permanence. La taille
+       d'origine est bonne pendant tout le recit (etapes 01 a 05) ; elle ne mord
+       sur le texte qu'a deux moments, et c'est la seule chose a corriger :
+         - l'ouverture, ou le pave titre est le plus haut de tout le site,
+         - l'allumage, ou la piece se met de face et gagne le mot-symbole en dessous.
+       On rapetisse et on remonte a ces deux moments-la seulement. */
+    if (large) {
+      CAM.cy = H * 0.5;
+      CAM.ech = Math.min(L * 0.5, H) * 0.35;
+    } else {
+      var ouv = 1 - doucement(q, 0.015, 0.10);          // 1 sur l'ouverture, 0 des l'etape 01
+      var fin = Math.max(bascule * 0.55, mot);          // monte a la bascule, plein a l'allumage
+      CAM.cy = H * (0.315 - 0.055 * ouv - 0.030 * fin);
+      CAM.ech = Math.min(L * 0.42, H * 0.30) * (1 - 0.30 * ouv - 0.16 * fin);
+    }
+
     var ouvre = boitier * (1 - lumiere * 0.9);
     var souffle = Math.sin(temps / 2700) * 0.045 * (1 - 0.7 * lumiere);
     /* la pièce suit légèrement le regard (souris seulement) */
     CAM.ax = 0.55 + (1.5708 - 0.55) * bascule - 0.30 * ouvre + visY * 0.04;
     CAM.ay = -0.32 * (1 - bascule) + souffle + visX * 0.07 * (1 - 0.45 * bascule);
 
-    var N = tactile ? 10 : (leger ? 14 : 26);   /* moins de strates empilees sur telephone */
+    var N = tactile ? 9 : (leger ? 14 : 26);   /* moins de strates empilees sur telephone */
     var yFace = -HAUT;
     var yHaut = -HAUT * matiere;
 
