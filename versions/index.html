@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="robots" content="noindex">
+<title>SBS Create 3D — versions</title>
+<style>
+  @font-face { font-family: "Archivo"; src: url("v2/Archivo-Variable.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+  @font-face { font-family: "Montserrat"; src: url("v2/Montserrat-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+  :root { --noir: #020407; --nuit: #060a10; --trait: #16212d; --trait-fort: #2b3b4c; --encre: #e8eef4; --douce: #8d9cad; --pale: #5b6b7c; --led: #30a8f0; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--noir); color: var(--encre); font: 16px/26px "Montserrat", "Segoe UI", Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+  main { max-width: 880px; margin: 0 auto; padding: 72px 16px 96px; }
+  .label { font: 12px/18px ui-monospace, Menlo, Consolas, monospace; letter-spacing: 0.08em; text-transform: uppercase; color: var(--led); margin: 0; }
+  h1 { font: 800 clamp(34px, 6vw, 56px)/1 "Archivo", Arial, sans-serif; text-transform: uppercase; letter-spacing: -0.015em; margin: 16px 0 0; }
+  .chapeau { color: var(--douce); margin: 18px 0 48px; max-width: 56ch; }
+  ol { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--trait); }
+  li { padding: 28px 0; border-bottom: 1px solid var(--trait); display: grid; grid-template-columns: 120px 1fr; gap: 8px 24px; }
+  .v { font: 800 30px/1 "Archivo", Arial, sans-serif; }
+  .date { font: 12px/18px ui-monospace, Menlo, monospace; color: var(--pale); margin-top: 8px; }
+  h2 { font: 700 18px/26px "Montserrat", Arial, sans-serif; margin: 0; }
+  p { margin: 8px 0 0; color: var(--douce); }
+  ul { margin: 10px 0 0; padding-left: 18px; color: var(--douce); font-size: 15px; line-height: 24px; }
+  .liens { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+  a.bouton { display: inline-block; padding: 10px 16px; border: 1px solid var(--trait-fort); color: var(--encre); text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  a.bouton:hover { border-color: var(--led); color: var(--led); }
+  a.bouton--led { background: var(--led); border-color: var(--led); color: var(--noir); }
+  a.bouton--led:hover { color: var(--noir); background: #5cc4ff; }
+  .etat { font: 11px/16px ui-monospace, Menlo, monospace; text-transform: uppercase; letter-spacing: 0.08em; color: var(--pale); border: 1px dashed var(--trait-fort); padding: 2px 6px; margin-left: 8px; vertical-align: 2px; }
+  @media (max-width: 600px) { li { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<main>
+  <p class="label">SBS Create 3D · maquettes KRAON</p>
+  <h1>Historique des versions</h1>
+  <p class="chapeau">Chaque version de la maquette reste consultable telle qu’elle a été montrée. La plus récente est en haut.</p>
+  <ol>
+    <li>
+      <div><div class="v">v2</div><div class="date">03/10/2026</div></div>
+      <div>
+        <h2>Direction artistique sombre et industrielle <span class="etat">en cours</span></h2>
+        <p>Construite sur le retour de Servan du 02/10 : la base est gardée, la DA passe en premium / industriel.</p>
+        <ul>
+          <li>Fond noir / bleu nuit, le bleu réservé à la lumière (contours, boutons, LED).</li>
+          <li>Ouverture : le logo naît en maillage filaire, puis cinq étapes avec frise — modélisation, tranchage, impression, finitions laser, pièce finale qui s’allume.</li>
+          <li>Textes courts : « Nous donnons forme à vos idées », « De l’idée à la matière ».</li>
+          <li>Menu complet, bandeau de 4 atouts, 3 activités avec fiche détaillée au clic.</li>
+          <li>Section 1 m³ : volume de fabrication en 3D, coté, qui se remplit couche par couche.</li>
+          <li>Réalisations en grand, une par écran, avec fiche (réalisation, technique, matière, dimensions).</li>
+          <li>Atelier en grandes photos : cadres « photo à fournir » tant que les vraies photos manquent. Formulaire de devis (non branché).</li>
+        </ul>
+        <div class="liens"><a class="bouton bouton--led" href="v2/">Voir la v2</a></div>
+      </div>
+    </li>
+    <li>
+      <div><div class="v">v1</div><div class="date">24/09/2026</div></div>
+      <div>
+        <h2>Scrollytelling « d’une idée à l’enseigne allumée » <span class="etat">montrée à Servan</span></h2>
+        <p>La première maquette envoyée à Servan, avec le correctif téléphone du jour même.</p>
+        <ul>
+          <li>Moteur 3D fait main : le vrai logo, reconstruit en primitives exactes, fabriqué en 7 étapes au défilement.</li>
+          <li>Galerie horizontale de 7 réalisations, atelier avec compteurs, contact.</li>
+        </ul>
+        <div class="liens"><a class="bouton" href="v1/">Voir la v1</a></div>
+      </div>
+    </li>
+  </ol>
+</main>
+</body>
+</html>
