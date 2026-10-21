@@ -315,7 +315,7 @@
   function dessine(p, intro, temps) {
     if (!L) return;
     ctx.clearRect(0, 0, L, H);
-    var large = L > 900;
+    var large = L > 900 || L > H * 1.2;                    /* ordinateur, ou téléphone / tablette en paysage */
     var q = seg(p, GARDE, 1);
 
     var maille = intro;                                       // le filaire se dessine au chargement
@@ -335,9 +335,10 @@
 
     /* cadrage */
     if (large) {
-      CAM.cx = L * 0.62;
+      var serre = 1 - clamp((L - 1024) / 416, 0, 1);        /* sous 1440 px, la pièce se pousse à droite et rapetisse un peu */
+      CAM.cx = L * 0.62 + 50 * serre;
       CAM.cy = H * (0.52 - 0.09 * mot);                     /* on remonte pour laisser la place au mot-symbole */
-      CAM.ech = Math.min(L * 0.5, H) * 0.35 * (1 - 0.12 * mot);
+      CAM.ech = Math.min(L * 0.5, H) * (0.35 - 0.05 * serre) * (1 - 0.12 * mot);
     } else {
       var ouv = 1 - doucement(q, 0.0, 0.07);
       CAM.cx = L * 0.5;
@@ -357,7 +358,7 @@
 
     ctx.save();
     plateau((1 - bascule) * 0.9);
-    if (cotesA > 0.01) cotes(cotesA, 0, large);
+    if (cotesA > 0.01) cotes(cotesA, 0, L > 1360);        /* les cotes de droite seulement quand la frise a de la marge */
     filaire(filA * (1 - bascule), maille, temps);
 
     /* 04 — la plaque dans laquelle on découpe ; contour fermé, la chute tombe */
@@ -640,7 +641,9 @@
     var A = pc3(a[0], a[1], a[2]), B = pc3(a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t);
     cx.moveTo(A[0], A[1]); cx.lineTo(B[0], B[1]);
   }
+  var zoneValeur = null;                                 /* le cadre du chiffre : aucune étiquette ne vient dessus */
   function etiquetteC(x, y, texte) {
+    if (zoneValeur && x > zoneValeur.x0 && x < zoneValeur.x1 && y > zoneValeur.y0 && y < zoneValeur.y1) return;
     cx.font = "11px ui-monospace, Menlo, Consolas, monospace"; cx.textAlign = "center"; cx.textBaseline = "middle";
     var w = cx.measureText(texte).width + 12;
     cx.fillStyle = "rgba(2,4,7,0.92)"; cx.fillRect(x - w / 2, y - 9, w, 18);
@@ -710,6 +713,8 @@
     for (var s = 0; s < 8 && bords > 0.98; s++) { var ps = pc3(S[s][0], S[s][1], S[s][2]); cx.fillRect(ps[0] - 2, ps[1] - 2, 4, 4); }
     /* cotes */
     if (cotA > 0.01) {
+      var rv = grandValeur.getBoundingClientRect(), rc = cube.getBoundingClientRect();
+      zoneValeur = { x0: rv.left - rc.left - 10, x1: rv.right - rc.left + 10, y0: rv.top - rc.top - 6, y1: rv.bottom - rc.top + 6 };
       coteC([-1, 1, 1], [1, 1, 1], [0, 0.0, 0.34], "1 m", cotA);
       coteC([1, 1, 1], [1, 1, -1], [0.34, 0, 0], "1 m", cotA);
       var gauche = null, xg = 1e9;                         /* l'arête verticale la plus à gauche, pour ne pas barrer le chiffre */

@@ -103,7 +103,7 @@
   }
 
   /* ——— Le récit : le logo naît en filaire, s'imprime, s'allume ——— */
-  .recit { position: relative; height: 420svh; }
+  .recit { position: relative; height: 640svh; }   /* assez long pour suivre chaque étape, plus court que la v2 (760) */
   .scene { position: sticky; top: 0; height: 100svh; min-height: 560px; overflow: hidden;
     background: radial-gradient(70% 60% at 66% 52%, #07111b 0%, var(--noir) 70%); }
   .scene__toile { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
@@ -151,8 +151,33 @@
   .console.visible { opacity: 1; }
   .console b { color: var(--cyan); font-weight: 400; }
 
-  @media (max-width: 900px) {
-    .recit { height: 360svh; }
+  /* entre 900 et 1200 px (iPad en paysage, petit portable) : la colonne de texte laisse la place à la pièce */
+  @media (min-width: 901px) and (max-width: 1200px) {
+    .scene__texte { width: min(44%, 640px); }
+  }
+
+  /* téléphone en paysage : la mise en page « côte à côte » de l'ordinateur, compactée */
+  @media (max-width: 900px) and (orientation: landscape) {
+    .recit { height: 560svh; }
+    .scene__texte { width: min(52%, 540px); }
+  }
+  @media (max-height: 520px) {
+    .scene, .grand__scene { min-height: 0; }
+    .chapitre__titre { font-size: 26px; margin-top: 10px; }
+    .chapitre__texte { font-size: 14px; line-height: 21px; margin-top: 10px; max-width: 44ch; }
+    .chapitre--ouverture .titre, .slogan { font-size: 26px !important; }
+    .ouverture__sous { font-size: 15px; margin-top: 10px; }
+    .actions { margin-top: 16px; }
+    .actions .bouton { padding: 10px 16px; }
+    .indice, .console { display: none; }
+    .chapitre--ouverture .actions .bouton:not(.bouton--led) { display: none; }
+    .scene__cadre { padding-top: var(--haut-barre); }
+    .frise li { height: 44px; }
+    .scene__texte { min-height: 0; }
+  }
+
+  @media (max-width: 900px) and (orientation: portrait) {
+    .recit { height: 560svh; }
     .scene { background: radial-gradient(90% 50% at 50% 30%, #07111b 0%, var(--noir) 72%); }
     .scene::after { content: ""; position: absolute; inset: 0; pointer-events: none;
       background: linear-gradient(180deg, rgba(2,4,7,0) 40%, rgba(2,4,7,0.88) 64%, rgba(2,4,7,0.98) 100%); }
@@ -176,7 +201,7 @@
     .frise__rail::after { transform-origin: 0 50%; transform: scaleX(var(--r, 0)); }
   }
 
-  @media (max-width: 900px) and (max-height: 720px) {   /* petits téléphones : on allège l'ouverture */
+  @media (max-width: 900px) and (orientation: portrait) and (max-height: 720px) {   /* petits téléphones : on allège l'ouverture */
     .chapitre--ouverture .titre { font-size: 32px; }
     .chapitre--ouverture .actions .bouton:not(.bouton--led) { display: none; }
     .chapitre__titre { font-size: 28px; }
@@ -238,7 +263,7 @@
   }
 
   /* ——— 1 m³ ——— */
-  .grand { position: relative; height: 170svh; background: var(--noir); }
+  .grand { position: relative; height: 260svh; background: var(--noir); }
   .grand__scene { position: sticky; top: 0; height: 100svh; min-height: 560px; overflow: hidden; }
   .grand__toile { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
   .grand__centre { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); text-align: center; pointer-events: none; }
@@ -256,7 +281,7 @@
   .capa:nth-child(n+3) { align-self: end; }
   .capa p { margin: 0; font-size: 15px; line-height: 23px; }
   @media (max-width: 760px) {
-    .grand { height: 150svh; }
+    .grand { height: 220svh; }
     .grand__centre { top: 38%; }
     .grand__capas { inset: auto var(--gutter) calc(28px + env(safe-area-inset-bottom, 0px)); grid-template-rows: auto; gap: 18px 14px; }
     .capa, .capa:nth-child(even) { justify-self: start; text-align: left; max-width: none; }
@@ -386,8 +411,9 @@
   @media (min-width: 901px) { .scene__texte { width: min(100%, 640px); } }
   .slogan span { display: block; }
   .slogan .lumiere { color: var(--led); text-shadow: 0 0 28px rgba(48,168,240,0.45); }
-  @media (max-width: 900px) { .slogan { font-size: clamp(32px, 9vw, 44px) !important; } }
-  @media (max-width: 900px) and (max-height: 720px) { .slogan { font-size: 30px !important; } }
+  @media (max-width: 900px) and (orientation: portrait) { .slogan { font-size: clamp(32px, 9vw, 44px) !important; } }
+  @media (max-width: 900px) and (orientation: portrait) and (max-height: 720px) { .slogan { font-size: 30px !important; } }
+  @media (max-height: 520px) { .slogan { font-size: 26px !important; } }
 
   /* cartes d'activité : toute la carte mène à la page */
   a.activite { color: inherit; text-decoration: none; }
