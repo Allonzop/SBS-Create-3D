@@ -103,7 +103,7 @@
   }
 
   /* ——— Le récit : le logo naît en filaire, s'imprime, s'allume ——— */
-  .recit { position: relative; height: 1100svh; }   /* 5 étapes, chacune suivie d’un palier immobile (voir COURSE dans accueil.js) */
+  .recit { position: relative; height: 320svh; }   /* 5 étapes jouées au temps : un cinquième de défilement par étape (voir ARRETS dans accueil.js) */
   .scene { position: sticky; top: 0; height: 100svh; min-height: 560px; overflow: hidden;
     background: radial-gradient(70% 60% at 66% 52%, #07111b 0%, var(--noir) 70%); }
   .scene__toile { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
@@ -158,7 +158,7 @@
 
   /* téléphone en paysage : la mise en page « côte à côte » de l'ordinateur, compactée */
   @media (max-width: 900px) and (orientation: landscape) {
-    .recit { height: 1000svh; }
+    .recit { height: 300svh; }
     .scene__texte { width: min(52%, 540px); }
   }
   @media (max-height: 520px) {
@@ -178,7 +178,7 @@
   }
 
   @media (max-width: 900px) and (orientation: portrait) {
-    .recit { height: 1000svh; }
+    .recit { height: 300svh; }
     .scene { background: radial-gradient(90% 50% at 50% 30%, #07111b 0%, var(--noir) 72%); }
     .scene::after { content: ""; position: absolute; inset: 0; pointer-events: none;
       background: linear-gradient(180deg, rgba(2,4,7,0) 40%, rgba(2,4,7,0.88) 64%, rgba(2,4,7,0.98) 100%); }
@@ -264,7 +264,7 @@
   }
 
   /* ——— 1 m³ ——— */
-  .grand { position: relative; height: 340svh; background: var(--noir); }
+  .grand { position: relative; height: 200svh; background: var(--noir); }
   .grand__scene { position: sticky; top: 0; height: 100svh; min-height: 560px; overflow: hidden; }
   .grand__toile { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
   .grand__centre { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); text-align: center; pointer-events: none; }
@@ -284,7 +284,7 @@
   .capa:nth-child(n+3) { align-self: end; }
   .capa p { margin: 0; font-size: 15px; line-height: 23px; }
   @media (max-width: 760px) {
-    .grand { height: 300svh; }
+    .grand { height: 180svh; }
     .grand__centre { top: 38%; }
     .grand__capas { inset: auto var(--gutter) calc(28px + env(safe-area-inset-bottom, 0px)); grid-template-rows: auto; gap: 18px 14px; }
     .capa, .capa:nth-child(even) { justify-self: start; text-align: left; max-width: none; }

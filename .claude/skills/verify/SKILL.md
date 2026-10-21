@@ -20,9 +20,9 @@ Playwright est installé globalement : `NODE_PATH=$(npm root -g) node script.js`
 - L'accueil : récit en 5 étapes (canvas `#toile`) et cube 1 m³ (`#cube` + `#cubeAvant`, tête d'impression).
 
 ## Piloter le récit
-- Défiler **à la molette** (`page.mouse.wheel(0, 120)` + ~650 ms) : c'est ce que fait un visiteur. `scrollTo` saute les transitions.
-- Progression lisible sans toucher au code : somme des `--r` des `.frise__rail` (0 → 5). Valeur figée sur plusieurs crans = palier.
-- Paliers attendus (centre, en part du défilement de `#recit`) : 0,178 · 0,353 · 0,547 · 0,789 · 0,979 (tableau `COURSE` de `accueil.js`). Cube : plein à partir de 0,8 de `#grand-format`.
+- Le récit est **joué au temps** : le défilement ne fait que demander une étape (un cinquième du défilement de `#recit` par étape, `etapeDemandee` dans `accueil.js`), puis l'étape se déroule seule en ~2,5 s et s'arrête sur `ARRETS[k]`. Le cube se remplit seul (~3 s) quand le haut de `#grand-format` passe sous 30 % de l'écran.
+- Donc : un geste de molette (`page.mouse.wheel(0, 240)`), puis **attendre sans toucher** et relever l'état toutes les 250 ms. `scrollTo` suivi d'une capture immédiate montre une transition en cours, pas un bug.
+- Progression lisible sans toucher au code : somme des `--r` des `.frise__rail` (0 → 5) ; arrêts attendus 0 · 0,75 · 1,82 · 2,82 · 3,89 · 5.
 - Attendre ~2,5 s après le chargement : le filaire se dessine en intro.
 
 ## Pièges
