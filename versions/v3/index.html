@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>SBS Create 3D</title>
+<meta name="description" content="SBS Create 3D, Ardennes : conception, impression 3D jusqu'à 1 m³, découpe et gravure laser, enseignes et trophées.">
+<meta name="theme-color" content="#020407">
+<meta property="og:title" content="SBS Create 3D">
+<meta property="og:description" content="SBS Create 3D, Ardennes : conception, impression 3D jusqu'à 1 m³, découpe et gravure laser, enseignes et trophées.">
+<meta property="og:type" content="website">
+<style>html,body{margin:0;background:#020407}
+[hidden]:not([hidden="until-found"]){display:none!important}</style>
+<link rel="stylesheet" href="commun.css">
+</head>
+<body class="accueil">
+
+<header class="barre" id="barre">
+  <div class="enveloppe barre__inner">
+    <a class="barre__logo" href="index.html" aria-label="SBS Create 3D — accueil"><img src="logo-blanc.png" alt="SBS Create 3D" width="520" height="358"></a>
+    <nav class="menu" id="menu" aria-label="Navigation principale">
+      <a href="index.html" class="ici" aria-current="page">Accueil</a>
+      <a href="impression-3d.html">Impression 3D</a>
+      <a href="laser.html">Laser</a>
+      <a href="enseignes.html">Enseignes</a>
+      <a href="realisations.html">Réalisations</a>
+      <a href="atelier.html">L’atelier</a>
+      <a href="contact.html">Contact</a>
+      <a class="bouton bouton--led" href="contact.html">Demander un devis</a>
+    </nav>
+    <button class="burger" id="burger" type="button" aria-controls="menu" aria-expanded="false" aria-label="Ouvrir le menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<main id="haut">
+  <section class="recit" id="recit" aria-label="De l’idée à la matière">
+    <div class="scene">
+      <canvas class="scene__toile" id="toile" aria-hidden="true"></canvas>
+      <img id="motReel" src="mot-sbs-blanc.png" alt="" width="2069" height="173" hidden>
+
+      <div class="scene__cadre">
+        <div class="scene__texte">
+
+          <article class="chapitre chapitre--ouverture actif" data-chapitre="0">
+            <p class="label label--led">Conception · Fabrication additive · Laser · Enseignes · Trophées</p>
+            <h1 class="titre slogan" style="margin-top: 22px;"><span>Donner forme</span><span>à l’idée,</span><span>la révéler</span><span class="lumiere">en impression 3D</span></h1>
+            <p class="ouverture__sous">Jusqu’à <b>1 m³</b> d’un seul tenant, dans les Ardennes.</p>
+            <div class="actions">
+              <a class="bouton bouton--led" href="contact.html">Parler de mon projet <span class="fleche"></span></a>
+              <a class="bouton" href="realisations.html">Voir nos réalisations</a>
+            </div>
+            <p class="indice label"><span class="indice__rail"></span>Faites défiler</p>
+          </article>
+
+          <article class="chapitre" data-chapitre="1">
+            <p class="label"><span class="num">01</span> — Modélisation</p>
+            <h2 class="titre chapitre__titre">Tout commence par un volume</h2>
+            <p class="chapitre__texte">Un croquis, un plan, une pièce à reproduire : elle devient un modèle 3D, cote par cote.</p>
+          </article>
+
+          <article class="chapitre" data-chapitre="2">
+            <p class="label"><span class="num">02</span> — Tranchage</p>
+            <h2 class="titre chapitre__titre">Le volume devient couches</h2>
+            <p class="chapitre__texte">Chaque strate et chaque trajet de buse sont calculés avant que la machine démarre.</p>
+          </article>
+
+          <article class="chapitre" data-chapitre="3">
+            <p class="label"><span class="num">03</span> — Impression</p>
+            <h2 class="titre chapitre__titre">Couche après couche</h2>
+            <p class="chapitre__texte">Sans moule, sans outillage. Du prototype à la série, jusqu’à 1 m³ d’un seul tenant.</p>
+          </article>
+
+          <article class="chapitre" data-chapitre="4">
+            <p class="label"><span class="num">04</span> — Finitions</p>
+            <h2 class="titre chapitre__titre">Le laser découpe et grave</h2>
+            <p class="chapitre__texte">Bois, acrylique, plastique, cuir, métal. Une découpe nette, une gravure qui ne s’efface pas.</p>
+          </article>
+
+          <article class="chapitre" data-chapitre="5">
+            <p class="label"><span class="num">05</span> — Pièce finale</p>
+            <h2 class="titre chapitre__titre">Et la pièce s’allume</h2>
+            <p class="chapitre__texte">Montée, câblée, éclairée. Prête à poser.</p>
+            <div class="actions">
+              <a class="bouton bouton--led" href="contact.html">Parler de mon projet <span class="fleche"></span></a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+      <ol class="frise" id="frise" aria-hidden="true">
+        <li><span class="frise__nom"><b>01</b>Modélisation</span><span class="frise__rail"></span></li>
+        <li><span class="frise__nom"><b>02</b>Tranchage</span><span class="frise__rail"></span></li>
+        <li><span class="frise__nom"><b>03</b>Impression</span><span class="frise__rail"></span></li>
+        <li><span class="frise__nom"><b>04</b>Finitions</span><span class="frise__rail"></span></li>
+        <li><span class="frise__nom"><b>05</b>Pièce finale</span><span class="frise__rail"></span></li>
+      </ol>
+      <pre class="console" id="console" aria-hidden="true"></pre>
+    </div>
+  </section>
+  <section class="atouts" aria-label="Nos points forts">
+    <ul class="enveloppe">
+      <li><strong>1 m<i>³</i></strong><span>Grand format d’un seul tenant</span></li>
+      <li><strong>Prototype <i>→</i> série</strong><span>De la pièce unique à la production</span></li>
+      <li><strong>Sur mesure</strong><span>Conçu et fabriqué pour votre projet</span></li>
+      <li><strong>Pro <i>&amp;</i> particulier</strong><span>Entreprises, artisans, clubs, particuliers</span></li>
+    </ul>
+  </section>
+  <section class="bloc" id="activites">
+    <div class="enveloppe">
+      <div class="entete-bloc">
+        <p class="label dep">Nos activités</p>
+        <h2 class="titre titre--l dep" style="--i:1">Trois métiers, un seul atelier</h2>
+      </div>
+      <div class="activites">
+        <a class="activite dep" href="impression-3d.html" style="--i:0">
+          <img class="activite__photo" src="impression-provisoire.jpg" alt="" loading="lazy" decoding="async">
+          <span class="provisoire">Visuel provisoire · photo à fournir</span>
+          <div class="activite__corps">
+            <p class="label label--led">01</p>
+            <h3 class="titre titre--m">Impression 3D</h3>
+            <p>Prototypes, pièces techniques, grand format.</p>
+            <span class="activite__lien">Découvrir</span>
+          </div>
+        </a>
+        <a class="activite dep" href="laser.html" style="--i:1">
+          <img class="activite__photo" src="trophee-sedan.jpg" alt="" loading="lazy" decoding="async" style="object-position: 50% 62%;">
+          
+          <div class="activite__corps">
+            <p class="label label--led">02</p>
+            <h3 class="titre titre--m">Découpe &amp; gravure laser</h3>
+            <p>Trophées, plaques, objets personnalisés.</p>
+            <span class="activite__lien">Découvrir</span>
+          </div>
+        </a>
+        <a class="activite dep" href="enseignes.html" style="--i:2">
+          <img class="activite__photo" src="led-couleur.jpg" alt="" loading="lazy" decoding="async">
+          
+          <div class="activite__corps">
+            <p class="label label--led">03</p>
+            <h3 class="titre titre--m">Enseignes &amp; signalétique</h3>
+            <p>Lettres en relief, caissons lumineux, totems.</p>
+            <span class="activite__lien">Découvrir</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+  <section class="grand" id="grand-format" aria-label="Impression grand format, 1 m³">
+    <div class="grand__scene">
+      <canvas class="grand__toile" id="cube" aria-hidden="true"></canvas>
+      <div class="grand__centre" id="grandCentre">
+        <p class="label label--led">Impression grand format</p>
+        <p class="grand__valeur" id="grandValeur">1 m<sup>3</sup></p>
+        <p class="grand__sous">D’un seul tenant</p>
+      </div>
+      <canvas class="grand__toile grand__toile--avant" id="cubeAvant" aria-hidden="true"></canvas>
+      <ul class="grand__capas" id="capas">
+        <li class="capa"><p class="label label--led">Volume</p><p>Jusqu’à 1 m³ pour une seule pièce, sans assemblage.</p></li>
+        <li class="capa"><p class="label label--led">Applications</p><p>Structures, maquettes d’architecture, mobilier, enseignes.</p></li>
+        <li class="capa"><p class="label label--led">Production</p><p>Pièce unique, prototype ou petite série.</p></li>
+        <li class="capa"><p class="label label--led">Dimensions utiles</p><p><span class="a-remplir">[À CONFIRMER]</span></p></li>
+      </ul>
+    </div>
+  </section>
+  <section class="bloc" id="realisations">
+    <div class="enveloppe">
+      <div class="bas-bloc">
+        <div class="entete-bloc" style="margin: 0;">
+          <p class="label dep">Réalisations</p>
+          <h2 class="titre titre--l dep" style="--i:1">Sorties de l’atelier</h2>
+        </div>
+        <a class="bouton dep" href="realisations.html" style="--i:2">Toutes les réalisations <span class="fleche"></span></a>
+      </div>
+      <div class="apercus">
+        <a class="apercu dep" href="realisations.html#polymoulages" style="--i:0">
+          <img src="polymoulages.jpg" alt="" loading="lazy" decoding="async">
+          <span class="apercu__txt"><span class="label label--led">Enseigne</span><span class="titre titre--m">Polymoulages</span></span>
+        </a>
+        <a class="apercu dep" href="realisations.html#sedan-sprint" style="--i:1">
+          <img src="trophee-sedan.jpg" alt="" loading="lazy" decoding="async">
+          <span class="apercu__txt"><span class="label label--led">Trophée</span><span class="titre titre--m">Sedan Sprint Club</span></span>
+        </a>
+        <a class="apercu dep" href="realisations.html#disque-retroeclaire" style="--i:2">
+          <img src="enseigne-sbs.jpg" alt="" loading="lazy" decoding="async">
+          <span class="apercu__txt"><span class="label label--led">Enseigne lumineuse</span><span class="titre titre--m">Disque rétroéclairé</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
+  <section class="appel">
+    <div class="enveloppe">
+      <div class="entete-bloc" style="margin: 0;">
+        <p class="label">Un projet ?</p>
+        <h2 class="titre titre--l">Parlons-en</h2>
+      </div>
+      <a class="bouton bouton--led" href="contact.html">Demander un devis <span class="fleche"></span></a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="pied">
+  <div class="enveloppe pied__inner">
+    <img src="logo-blanc.png" alt="SBS Create 3D" width="520" height="358">
+    <span>Conception · Impression 3D · Laser · Enseignes · Trophées — Ardennes</span>
+    <span>Entreprise sœur : <a class="soeur-lien" href="https://www.polycomm.fr/" rel="noopener">Polycomm</a></span>
+    <span>Mentions légales · <span class="a-remplir">[SIRET]</span></span>
+    <span>Maquette v3 · 21/10/2026 · <a href="../">historique des versions</a></span>
+  </div>
+</footer>
+
+<script src="commun.js" defer></script>
+<script src="accueil.js" defer></script>
+</body>
+</html>

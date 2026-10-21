@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>Contact · SBS Create 3D</title>
+<meta name="description" content="Contacter SBS Create 3D : devis, impression 3D, laser, enseignes.">
+<meta name="theme-color" content="#020407">
+<meta property="og:title" content="Contact · SBS Create 3D">
+<meta property="og:description" content="Contacter SBS Create 3D : devis, impression 3D, laser, enseignes.">
+<meta property="og:type" content="website">
+<style>html,body{margin:0;background:#020407}
+[hidden]:not([hidden="until-found"]){display:none!important}</style>
+<link rel="stylesheet" href="commun.css">
+</head>
+<body>
+
+<header class="barre" id="barre">
+  <div class="enveloppe barre__inner">
+    <a class="barre__logo" href="index.html" aria-label="SBS Create 3D — accueil"><img src="logo-blanc.png" alt="SBS Create 3D" width="520" height="358"></a>
+    <nav class="menu" id="menu" aria-label="Navigation principale">
+      <a href="index.html">Accueil</a>
+      <a href="impression-3d.html">Impression 3D</a>
+      <a href="laser.html">Laser</a>
+      <a href="enseignes.html">Enseignes</a>
+      <a href="realisations.html">Réalisations</a>
+      <a href="atelier.html">L’atelier</a>
+      <a href="contact.html" class="ici" aria-current="page">Contact</a>
+      <a class="bouton bouton--led" href="contact.html">Demander un devis</a>
+    </nav>
+    <button class="burger" id="burger" type="button" aria-controls="menu" aria-expanded="false" aria-label="Ouvrir le menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<main id="haut">
+  <section class="bloc" id="contact" style="padding-top: calc(var(--haut-barre) + clamp(48px, 7vw, 96px));">
+    <div class="enveloppe contact">
+      <div>
+        <div class="entete-bloc" style="margin-bottom: 0;">
+          <p class="label dep">Contact</p>
+          <h1 class="titre titre--l dep" style="--i:1">Parlons de votre projet</h1>
+          <p class="chapeau dep" style="--i:2">Un plan, une photo, des dimensions ou juste une idée : on revient vers vous avec une proposition.</p>
+        </div>
+        <dl class="coordonnees dep" style="--i:3">
+          <div><dt>Atelier</dt><dd><span class="a-remplir">[ADRESSE]</span></dd></div>
+          <div><dt>Téléphone</dt><dd><span class="a-remplir">[TÉLÉPHONE]</span></dd></div>
+          <div><dt>E-mail</dt><dd><span class="a-remplir">[EMAIL]</span></dd></div>
+          <div><dt>Réseaux</dt><dd><a href="https://www.instagram.com/sbs_create_3D" rel="noopener">Instagram</a> · Facebook — sbs_create_3D</dd></div>
+        </dl>
+        <div class="soeur dep" style="--i:4">
+          <p class="label label--led">Entreprise sœur</p>
+          <p><b style="color: var(--encre);">Polycomm</b> fabrique à Bazeilles des jardinières, du mobilier et des accessoires en polyester.</p>
+          <a class="bouton" href="https://www.polycomm.fr/" rel="noopener">Découvrir Polycomm <span class="fleche"></span></a>
+        </div>
+      </div>
+      <form class="formulaire dep" id="formulaire" style="--i:2" novalidate>
+        <div class="champ"><label for="f-nom">Nom</label><input id="f-nom" name="nom" autocomplete="name" required></div>
+        <div class="champ"><label for="f-societe">Entreprise <span style="text-transform: none; letter-spacing: 0;">(facultatif)</span></label><input id="f-societe" name="societe" autocomplete="organization"></div>
+        <div class="champ"><label for="f-mail">E-mail</label><input id="f-mail" name="email" type="email" autocomplete="email" required></div>
+        <div class="champ"><label for="f-tel">Téléphone</label><input id="f-tel" name="tel" type="tel" autocomplete="tel"></div>
+        <div class="champ champ--large"><label for="f-besoin">Votre besoin</label>
+          <select id="f-besoin" name="besoin">
+            <option>Impression 3D</option>
+            <option>Découpe &amp; gravure laser</option>
+            <option>Enseigne &amp; signalétique</option>
+            <option>Trophée</option>
+            <option>Je ne sais pas encore</option>
+          </select>
+        </div>
+        <div class="champ champ--large"><label for="f-msg">Votre projet</label><textarea id="f-msg" name="message" placeholder="Ce que vous voulez fabriquer, les dimensions, la quantité, le délai…"></textarea></div>
+        <div class="champ champ--large"><label for="f-fichier">Fichier <span style="text-transform: none; letter-spacing: 0;">(plan, photo, STL…)</span></label><input id="f-fichier" name="fichier" type="file"></div>
+        <div class="formulaire__pied">
+          <p class="formulaire__note">Réponse sous 48 h ouvrées.</p>
+          <button class="bouton bouton--led" type="submit">Envoyer la demande <span class="fleche"></span></button>
+        </div>
+        <p class="formulaire__retour" id="formRetour" hidden>Maquette : l’envoi sera branché à la mise en ligne. Rien n’a été transmis.</p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="pied">
+  <div class="enveloppe pied__inner">
+    <img src="logo-blanc.png" alt="SBS Create 3D" width="520" height="358">
+    <span>Conception · Impression 3D · Laser · Enseignes · Trophées — Ardennes</span>
+    <span>Entreprise sœur : <a class="soeur-lien" href="https://www.polycomm.fr/" rel="noopener">Polycomm</a></span>
+    <span>Mentions légales · <span class="a-remplir">[SIRET]</span></span>
+    <span>Maquette v3 · 21/10/2026 · <a href="../">historique des versions</a></span>
+  </div>
+</footer>
+
+<script src="commun.js" defer></script>
+
+</body>
+</html>
