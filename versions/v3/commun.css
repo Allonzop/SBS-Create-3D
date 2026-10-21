@@ -12,7 +12,7 @@
     --trait-fort: #2b3b4c;
     --encre: #e8eef4;
     --douce: #8d9cad;
-    --pale: #5b6b7c;
+    --pale: #728294;   /* éclairci : 4,5:1 minimum sur tous les fonds du site */
     --led: #30a8f0;
     --led-vif: #5cc4ff;
     --cyan: #00d8fc;
@@ -103,7 +103,7 @@
   }
 
   /* ——— Le récit : le logo naît en filaire, s'imprime, s'allume ——— */
-  .recit { position: relative; height: 640svh; }   /* assez long pour suivre chaque étape, plus court que la v2 (760) */
+  .recit { position: relative; height: 1100svh; }   /* 5 étapes, chacune suivie d’un palier immobile (voir COURSE dans accueil.js) */
   .scene { position: sticky; top: 0; height: 100svh; min-height: 560px; overflow: hidden;
     background: radial-gradient(70% 60% at 66% 52%, #07111b 0%, var(--noir) 70%); }
   .scene__toile { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
@@ -158,7 +158,7 @@
 
   /* téléphone en paysage : la mise en page « côte à côte » de l'ordinateur, compactée */
   @media (max-width: 900px) and (orientation: landscape) {
-    .recit { height: 560svh; }
+    .recit { height: 1000svh; }
     .scene__texte { width: min(52%, 540px); }
   }
   @media (max-height: 520px) {
@@ -177,7 +177,7 @@
   }
 
   @media (max-width: 900px) and (orientation: portrait) {
-    .recit { height: 560svh; }
+    .recit { height: 1000svh; }
     .scene { background: radial-gradient(90% 50% at 50% 30%, #07111b 0%, var(--noir) 72%); }
     .scene::after { content: ""; position: absolute; inset: 0; pointer-events: none;
       background: linear-gradient(180deg, rgba(2,4,7,0) 40%, rgba(2,4,7,0.88) 64%, rgba(2,4,7,0.98) 100%); }
@@ -209,7 +209,7 @@
 
   /* ——— Quatre arguments ——— */
   .atouts { border-block: 1px solid var(--trait); background: var(--nuit); }
-  .atouts ul { list-style: none; margin: 0 auto; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); }
+  .atouts ul { list-style: none; margin: 0 auto; padding: 0 var(--gutter); display: grid; grid-template-columns: repeat(4, 1fr); }
   .atouts li { padding: 30px 24px; border-left: 1px solid var(--trait); display: grid; gap: 6px; }
   .atouts li:first-child { border-left: 0; padding-left: 0; }
   .atouts strong { font-family: var(--titre); font-weight: 800; font-size: 22px; text-transform: uppercase; letter-spacing: -0.01em; }
@@ -237,7 +237,7 @@
   .activite__ouvrir::before { content: "+"; display: inline-grid; place-items: center; width: 30px; height: 30px; border: 1px solid var(--trait-fort); font: 400 18px/1 var(--texte); transition: border-color 200ms, box-shadow 200ms, color 200ms; }
   .activite__ouvrir:hover::before { border-color: var(--led); color: var(--led); box-shadow: 0 0 14px rgba(48,168,240,0.45); }
   .activite__ouvrir::after { content: ""; position: absolute; inset: 0; }   /* toute la carte est cliquable */
-  .provisoire { position: absolute; z-index: 2; top: 16px; left: 16px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--douce); border: 1px dashed var(--trait-fort); padding: 4px 8px; background: rgba(2,4,7,0.7); }
+  .provisoire { position: absolute; z-index: 2; top: 16px; left: 16px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--douce); border: 1px dashed var(--trait-fort); padding: 4px 8px; background: rgba(2,4,7,0.7); }
   @media (max-width: 900px) {
     .activites { grid-template-columns: 1fr; }
     .activite { min-height: 380px; }
@@ -263,7 +263,7 @@
   }
 
   /* ——— 1 m³ ——— */
-  .grand { position: relative; height: 260svh; background: var(--noir); }
+  .grand { position: relative; height: 340svh; background: var(--noir); }
   .grand__scene { position: sticky; top: 0; height: 100svh; min-height: 560px; overflow: hidden; }
   .grand__toile { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
   .grand__centre { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); text-align: center; pointer-events: none; }
@@ -274,6 +274,8 @@
   }
   .grand__valeur sup { font-size: 0.42em; vertical-align: 0; position: relative; top: -0.95em; margin-left: 0.04em; color: var(--led); text-shadow: 0 0 24px rgba(48,168,240,0.9); }
   .grand__sous { margin: 16px 0 0; font-family: var(--mono); font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--douce); }
+  /* les deux mentions passent devant les arêtes du cube, sur un fond noir comme les cotes */
+  .grand__centre .label, .grand__sous { display: inline-block; padding: 3px 9px; background: rgba(2,4,7,0.88); white-space: nowrap; }
   .grand__capas { position: absolute; inset: calc(var(--haut-barre) + 36px) var(--gutter) 40px; margin: 0 auto; max-width: var(--max); padding: 0; list-style: none; pointer-events: none;
     display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
   .capa { max-width: 250px; display: grid; gap: 6px; align-self: start; opacity: var(--a, 1); transform: translateY(calc((1 - var(--a, 1)) * 12px)); }
@@ -281,7 +283,7 @@
   .capa:nth-child(n+3) { align-self: end; }
   .capa p { margin: 0; font-size: 15px; line-height: 23px; }
   @media (max-width: 760px) {
-    .grand { height: 220svh; }
+    .grand { height: 300svh; }
     .grand__centre { top: 38%; }
     .grand__capas { inset: auto var(--gutter) calc(28px + env(safe-area-inset-bottom, 0px)); grid-template-rows: auto; gap: 18px 14px; }
     .capa, .capa:nth-child(even) { justify-self: start; text-align: left; max-width: none; }
@@ -304,7 +306,7 @@
   .real__fond { position: absolute; inset: -40px; width: calc(100% + 80px); height: calc(100% + 80px); object-fit: cover; filter: blur(34px) brightness(0.32) saturate(1.1); }
   .real__img { position: relative; width: 100%; height: 100%; object-fit: contain; }
   .real__fiche { padding: clamp(28px, 4vw, 56px); display: flex; flex-direction: column; justify-content: space-between; gap: 28px; border-left: 1px solid var(--trait); background: var(--nuit); }
-  .real__fiche h3 { margin-top: 16px; }
+  .real__fiche h2 { margin-top: 16px; }
   .real__desc { color: var(--douce); margin: 16px 0 0; }
   .specs { margin: 0; display: grid; }
   .specs div { display: grid; grid-template-columns: 112px 1fr; gap: 12px; padding: 12px 0; border-top: 1px solid var(--trait); }
@@ -408,7 +410,11 @@
   /* slogan : découpé en lignes qui tiennent à toutes les largeurs */
   .slogan { font-size: clamp(34px, 3.6vw, 52px) !important; line-height: 1.0; }
   .grand__toile--avant { z-index: 2; pointer-events: none; }
-  @media (min-width: 901px) { .scene__texte { width: min(100%, 640px); } }
+  @media (min-width: 901px) {
+    .scene__texte { width: min(100%, 580px); }
+    .chapitre__titre { font-size: clamp(34px, 3.7vw, 54px); }   /* le titre s'arrête avant la pièce */
+  }
+  @media (min-width: 901px) and (max-width: 1200px) { .scene__texte { width: min(46%, 580px); } }
   .slogan span { display: block; }
   .slogan .lumiere { color: var(--led); text-shadow: 0 0 28px rgba(48,168,240,0.45); }
   @media (max-width: 900px) and (orientation: portrait) { .slogan { font-size: clamp(32px, 9vw, 44px) !important; } }
@@ -460,3 +466,9 @@
   .soeur p:not(.label) { margin: 0; color: var(--douce); font-size: 15px; line-height: 24px; }
   .soeur a { justify-self: start; margin-top: 6px; }
   .pied .soeur-lien { color: var(--douce); }
+
+  /* v3 — finitions de l'audit : le numéro sur photo reste lisible, les surfaces du navigateur suivent la DA */
+  .activite__corps .label--led { color: var(--led-vif); }
+  html { color-scheme: dark; scrollbar-color: var(--trait-fort) var(--noir); }
+  ::selection { background: rgba(48,168,240,0.35); color: var(--encre); }
+  .champ input, .champ textarea { caret-color: var(--led); }

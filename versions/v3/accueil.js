@@ -63,8 +63,38 @@
   function flou(v) { ctx.shadowBlur = v * FLOU; }
 
   var GARDE = 0.07;                                  // l'ouverture tient pendant cette part du défilement
-  var E0 = [0.00, 0.03, 0.19, 0.36, 0.55, 0.80];     // début de chaque chapitre, dans le récit
+  var E0 = [0.00, 0.03, 0.19, 0.36, 0.55, 0.83];     // début de chaque chapitre, dans le récit
   var ETAPES = E0.map(function (v, i) { return i === 0 ? 0 : GARDE + v * (1 - GARDE); });
+
+  /* Le récit se pose à chaque étape. Le défilement alterne des passages où la
+     pièce se transforme et des paliers où elle reste immobile, le temps de lire.
+     PALIERS : là où chaque étape est terminée (avant que son texte s'efface).
+     Les poids sont relatifs : la hauteur de .recit dans commun.css fixe le total. */
+  var PALIERS = [0.15, 0.33, 0.515, 0.80, 1];
+  var COURSE = (function () {
+    var pq = function (q) { return GARDE + q * (1 - GARDE); };
+    var va = [1.2, 1.3, 1.5, 2.0, 1.5], tient = 0.55, segs = [[0.4, 0, GARDE]], avant = GARDE, tot = 0;
+    for (var i = 0; i < PALIERS.length; i++) {
+      var p = pq(PALIERS[i]);
+      segs.push([va[i], avant, p]);
+      segs.push([i === PALIERS.length - 1 ? 0.45 : tient, p, p]);
+      avant = p;
+    }
+    segs.forEach(function (c) { tot += c[0]; });
+    segs.forEach(function (c) { c[0] /= tot; });
+    return segs;
+  })();
+  function deroule(s) {                              /* part du défilement → avancée du récit */
+    for (var i = 0, a = 0; i < COURSE.length; i++) {
+      var c = COURSE[i];
+      if (s <= a + c[0] || i === COURSE.length - 1) {
+        var t = clamp((s - a) / c[0], 0, 1);
+        return c[1] + (c[2] - c[1]) * (0.5 * t + 0.5 * lisse(t));   /* ralentit en arrivant sur le palier */
+      }
+      a += c[0];
+    }
+    return 1;
+  }
 
   var LOGO = {"corps":[[[0.12167,-0.72775],[0.76701,-0.35533],[0.7767,-0.3472],[0.78302,-0.33624],[0.78522,-0.32379],[0.78524,0.40035],[0.78293,0.41311],[0.77629,0.42426],[0.76616,0.43237],[0.17037,0.75491],[0.13991,0.74608],[0.10824,0.7445],[0.07706,0.75024],[0.04803,0.763],[0.02272,0.78209],[0.00247,0.80649],[-0.01162,0.83489],[-0.01881,0.86578],[-0.0187,0.89749],[-0.0113,0.92832],[0.00299,0.95662],[0.02341,0.98088],[0.04886,0.9998],[0.07797,1.01235],[0.1092,1.01788],[0.14085,1.01607],[0.17125,1.00704],[0.19875,0.99125],[0.22188,0.96957],[0.23941,0.94315],[0.25039,0.9134],[0.25424,0.88193],[0.83835,0.56571],[0.86638,0.54712],[0.89064,0.52383],[0.91037,0.49659],[0.92494,0.46627],[0.93386,0.43384],[0.93687,0.40034],[0.93685,-0.32379],[0.93399,-0.35645],[0.9255,-0.38812],[0.91165,-0.41783],[0.89284,-0.44468],[0.86965,-0.46786],[0.8428,-0.48666],[0.19746,-0.85908],[0.17531,-0.86757],[0.15162,-0.86881],[0.12871,-0.86267],[0.10882,-0.84975],[0.0939,-0.83131],[0.0854,-0.80916],[0.08416,-0.78547],[0.09031,-0.76256],[0.10323,-0.74267]],[[-0.12946,0.75274],[-0.7748,0.38032],[-0.78449,0.37219],[-0.79081,0.36124],[-0.79301,0.34878],[-0.79303,-0.37535],[-0.79072,-0.38812],[-0.78408,-0.39926],[-0.77395,-0.40737],[-0.17816,-0.72991],[-0.1477,-0.72109],[-0.11604,-0.71951],[-0.08485,-0.72525],[-0.05583,-0.738],[-0.03051,-0.7571],[-0.01026,-0.7815],[0.00383,-0.8099],[0.01101,-0.84078],[0.0109,-0.87249],[0.00351,-0.90332],[-0.01079,-0.93163],[-0.0312,-0.95589],[-0.05665,-0.9748],[-0.08577,-0.98736],[-0.11699,-0.99288],[-0.14865,-0.99108],[-0.17904,-0.98204],[-0.20654,-0.96626],[-0.22967,-0.94457],[-0.2472,-0.91815],[-0.25818,-0.88841],[-0.26203,-0.85693],[-0.84614,-0.54072],[-0.87417,-0.52212],[-0.89844,-0.49883],[-0.91817,-0.47159],[-0.93273,-0.44128],[-0.94166,-0.40885],[-0.94466,-0.37535],[-0.94464,0.34879],[-0.94178,0.38145],[-0.9333,0.41311],[-0.91944,0.44282],[-0.90063,0.46967],[-0.87745,0.49285],[-0.85059,0.51165],[-0.20525,0.88407],[-0.1831,0.89257],[-0.15941,0.89381],[-0.1365,0.88766],[-0.11661,0.87474],[-0.10169,0.8563],[-0.09319,0.83416],[-0.09195,0.81047],[-0.0981,0.78756],[-0.11102,0.76767]]],"trous":[[[0.20913,0.88116],[0.20541,0.90703],[0.19455,0.93081],[0.17743,0.95057],[0.15544,0.96471],[0.13035,0.97207],[0.10421,0.97207],[0.07913,0.96471],[0.05714,0.95057],[0.04002,0.93081],[0.02916,0.90703],[0.02544,0.88116],[0.02916,0.85528],[0.04002,0.8315],[0.05714,0.81174],[0.07913,0.79761],[0.10421,0.79024],[0.13035,0.79024],[0.15544,0.79761],[0.17743,0.81174],[0.19455,0.8315],[0.20541,0.85528]],[[-0.03323,-0.85616],[-0.03695,-0.83029],[-0.04781,-0.80651],[-0.06493,-0.78675],[-0.08692,-0.77262],[-0.112,-0.76525],[-0.13815,-0.76525],[-0.16323,-0.77262],[-0.18522,-0.78675],[-0.20234,-0.80651],[-0.2132,-0.83029],[-0.21692,-0.85616],[-0.2132,-0.88204],[-0.20234,-0.90582],[-0.18522,-0.92558],[-0.16323,-0.93971],[-0.13815,-0.94708],[-0.112,-0.94708],[-0.08692,-0.93971],[-0.06493,-0.92558],[-0.04781,-0.90582],[-0.03695,-0.88204]]],"barres":[[[-0.17877,0.52152],[0.41956,0.35372],[0.44026,0.34421],[0.45702,0.32877],[0.46818,0.3089],[0.47266,0.28656],[0.47001,0.26393],[0.4605,0.24322],[0.44506,0.22647],[0.4252,0.21531],[0.40286,0.21083],[0.38023,0.21347],[-0.2181,0.38127],[-0.23881,0.39078],[-0.25556,0.40623],[-0.26673,0.42609],[-0.2712,0.44843],[-0.26856,0.47106],[-0.25905,0.49177],[-0.24361,0.50852],[-0.22374,0.51968],[-0.2014,0.52416]],[[-0.59483,0.38099],[0.45792,0.08575],[0.47863,0.07624],[0.49538,0.0608],[0.50655,0.04093],[0.51102,0.01859],[0.50838,-0.00404],[0.49887,-0.02475],[0.48343,-0.0415],[0.46356,-0.05266],[0.44122,-0.05714],[0.41859,-0.0545],[-0.63416,0.24075],[-0.65487,0.25026],[-0.67162,0.2657],[-0.68278,0.28556],[-0.68726,0.3079],[-0.68462,0.33053],[-0.67511,0.35124],[-0.65966,0.36799],[-0.6398,0.37915],[-0.61746,0.38363]],[[-0.40593,0.09632],[0.64683,-0.19892],[0.66753,-0.20843],[0.68429,-0.22387],[0.69545,-0.24373],[0.69993,-0.26608],[0.69728,-0.28871],[0.68777,-0.30941],[0.67233,-0.32617],[0.65247,-0.33733],[0.63013,-0.34181],[0.6075,-0.33916],[-0.44526,-0.04392],[-0.46596,-0.03441],[-0.48272,-0.01897],[-0.49388,0.00089],[-0.49836,0.02323],[-0.49571,0.04587],[-0.4862,0.06657],[-0.47076,0.08333],[-0.4509,0.09449],[-0.42856,0.09897]],[[-0.34832,-0.14258],[0.25001,-0.31038],[0.27071,-0.31989],[0.28747,-0.33533],[0.29863,-0.3552],[0.30311,-0.37754],[0.30046,-0.40017],[0.29095,-0.42087],[0.27551,-0.43763],[0.25565,-0.44879],[0.23331,-0.45327],[0.21068,-0.45062],[-0.38765,-0.28282],[-0.40836,-0.27331],[-0.42511,-0.25787],[-0.43627,-0.23801],[-0.44075,-0.21567],[-0.43811,-0.19304],[-0.4286,-0.17233],[-0.41316,-0.15558],[-0.39329,-0.14441],[-0.37095,-0.13994]]]};
   var HAUT = 0.30;
@@ -292,7 +322,7 @@
     if (!large) { ctx.globalAlpha = 1; return; }
     cote([B.x1, B.z0], [B.x1, B.z1], y, -0.22, "1,07 L", alpha);
     cote([0.785, 0.02], [0.937, 0.02], y, -0.34, "ép. 0,08 L", alpha);
-    repere([0.861, -0.389], [1.26, -0.64], y, "R 0,10 L", 32, alpha);
+    if (L > 1700) repere([0.861, -0.389], [1.26, -0.64], y, "R 0,10 L", 32, alpha);   /* sinon elle bute sur la frise */
     ctx.globalAlpha = 1;
   }
 
@@ -320,14 +350,14 @@
 
     var maille = intro;                                       // le filaire se dessine au chargement
     var cotesA = doucement(q, 0.03, 0.11) * (1 - doucement(q, 0.16, 0.22));
-    var tranches = doucement(q, 0.19, 0.34);
-    var matiere = doucement(q, 0.36, 0.55);
+    var tranches = doucement(q, 0.19, 0.325);
+    var matiere = doucement(q, 0.36, 0.51);
     var bascule = doucement(q, 0.55, 0.65);
     var coupe = doucement(q, 0.62, 0.70);
     var chute = doucement(q, 0.70, 0.74);
-    var grave = doucement(q, 0.74, 0.82);
-    var boitier = doucement(q, 0.81, 0.89);
-    var lumiere = doucement(q, 0.88, 0.96);
+    var grave = doucement(q, 0.74, 0.795);
+    var boitier = doucement(q, 0.83, 0.90);
+    var lumiere = doucement(q, 0.89, 0.96);
     var mot = doucement(q, 0.94, 1.00);
     var allume = lumiere * (((lumiere > 0.07 && lumiere < 0.115) || (lumiere > 0.17 && lumiere < 0.205)) ? 0.22 : 1);
     /* le filaire reste en fantôme pendant l'impression : c'est la cible */
@@ -336,9 +366,9 @@
     /* cadrage */
     if (large) {
       var serre = 1 - clamp((L - 1024) / 416, 0, 1);        /* sous 1440 px, la pièce se pousse à droite et rapetisse un peu */
-      CAM.cx = L * 0.62 + 50 * serre;
+      CAM.cx = L * 0.655 + 40 * serre;                      /* la pièce laisse de l'air au titre, à gauche */
       CAM.cy = H * (0.52 - 0.09 * mot);                     /* on remonte pour laisser la place au mot-symbole */
-      CAM.ech = Math.min(L * 0.5, H) * (0.35 - 0.05 * serre) * (1 - 0.12 * mot);
+      CAM.ech = Math.min(L * 0.5, H) * (0.35 - 0.05 * serre) * (1 - 0.06 * bascule) * (1 - 0.08 * mot);
     } else {
       var ouv = 1 - doucement(q, 0.0, 0.07);
       CAM.cx = L * 0.5;
@@ -728,6 +758,7 @@
   }
 
   /* ——— boucle ——— */
+  function derouleCube(s) { return clamp(s / 0.8, 0, 1); }   /* le cube rempli reste à l'écran sur le dernier cinquième */
   function progression(el) {
     var r = el.getBoundingClientRect();
     var total = r.height - window.innerHeight;
@@ -744,8 +775,8 @@
     var t0 = performance.now();
     if (!debutIntro) debutIntro = t;
     intro = lisse(clamp((t - debutIntro) / 2200, 0, 1));
-    cibleR = progression(recit); cibleG = progression(grand);
-    courantR += (cibleR - courantR) * 0.17; courantG += (cibleG - courantG) * 0.14;
+    cibleR = deroule(progression(recit)); cibleG = derouleCube(progression(grand));
+    courantR += (cibleR - courantR) * 0.12; courantG += (cibleG - courantG) * 0.11;
     visX += (cibX - visX) * 0.05; visY += (cibY - visY) * 0.05;
     if (Math.abs(cibleR - courantR) < 0.0002) courantR = cibleR;
     if (Math.abs(cibleG - courantG) < 0.0002) courantG = cibleG;
@@ -783,6 +814,21 @@
     vue.observe(recit); vue.observe(grand);
   } else { visGrand = true; }
 
+  /* clavier : un lien qui prend le focus dans une étape cachée amène la page sur le palier de cette étape */
+  function palierDe(k) {                             /* centre du palier de l'étape k, en part du défilement */
+    var i = k === 0 ? 0 : 2 * k, a = 0;
+    for (var j = 0; j < i; j++) a += COURSE[j][0];
+    return a + COURSE[i][0] / 2;
+  }
+  chapitres.forEach(function (c, k) {
+    c.addEventListener("focusin", function () {
+      if (doux || +c.style.opacity > 0.9) return;
+      var r = recit.getBoundingClientRect(), course = recit.offsetHeight - window.innerHeight;
+      window.scrollTo({ top: Math.round(window.scrollY + r.top + palierDe(k) * course), behavior: "instant" });
+      courantR = cibleR = deroule(progression(recit)); relance();
+    });
+  });
+
   window.addEventListener("scroll", surDefilement, { passive: true });
   if (window.matchMedia("(pointer: fine)").matches) {
     window.addEventListener("pointermove", function (e) {
@@ -801,8 +847,8 @@
     dessineCube(1, 0, 1);
     chapitres.forEach(function (c) { c.style.opacity = "1"; c.classList.add("actif"); });
   } else {
-    courantR = cibleR = progression(recit);
-    courantG = cibleG = progression(grand);
+    courantR = cibleR = deroule(progression(recit));
+    courantG = cibleG = derouleCube(progression(grand));
     relance();
   }
 })();
