@@ -584,6 +584,9 @@
     if (mot > 0.005 && motImg.complete && motImg.naturalWidth) {
       var pcl = proj(0, yFace, 0);
       var wT = Math.min(CAM.ech * 3.6, L - 44, motImg.naturalWidth * 1.3 / dpr);
+      var yT = pcl[1] + CAM.ech * 1.18, rf = frise.getBoundingClientRect(), rt = toile.getBoundingClientRect();
+      if (large && yT + wT * 0.09 > rf.top - rt.top && yT < rf.bottom - rt.top)       /* à la hauteur de la frise : il s'arrête avant elle */
+        wT = Math.max(120, Math.min(wT, 2 * (rf.left - rt.left - 18 - pcl[0])));
       var hT = wT * motImg.naturalHeight / motImg.naturalWidth;
       ctx.save();
       ctx.globalAlpha = mot;

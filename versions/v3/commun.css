@@ -173,6 +173,7 @@
     .chapitre--ouverture .actions .bouton:not(.bouton--led) { display: none; }
     .scene__cadre { padding-top: var(--haut-barre); }
     .frise li { height: 44px; }
+    .frise__nom { display: none; }   /* écran bas (téléphone en paysage) : les losanges suffisent, la pièce garde sa place */
     .scene__texte { min-height: 0; }
   }
 
